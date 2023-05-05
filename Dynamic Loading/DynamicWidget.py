@@ -15,16 +15,12 @@ Config.set('graphics', 'height', '980')
 #Config.write()
 from kivymd.app             import MDApp
 
-from kivy.uix.widget        import Widget
-from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.floatlayout   import FloatLayout
-from kivy.uix.image         import Image
 from kivy.properties        import ObjectProperty,StringProperty,NumericProperty
 from kivy.resources         import resource_add_path, resource_find
 from kivy.metrics           import dp
 from kivy.core.window       import Window
 from kivy.core.image        import Image as ImageConvert
-from kivy.lang              import Builder
 
 
 #from kivymd.uix.snackbar    import BaseSnackbar
@@ -48,20 +44,17 @@ class MainLayout(FloatLayout):
         
         
     def load_cards(self):
-        #self.dbconn = sqlite3.connect('kivysql.db',detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
-        self.dbconn = mysql.connector.connect(
-			#host = "vibely.cxuua18zjocr.ap-southeast-2.rds.amazonaws.com",
-            host ="database-1.csfcckck2rja.us-east-1.rds.amazonaws.com", 
-			user = "admin",
-			#passwd = "vibelyPassword", 
-            passwd = "DENe6Yhqny5SLxS7zc1h",
-			#database = "vibely",
-            database = "ITPE02",
-			)
+        self.dbconn = sqlite3.connect('kivysql.db',detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+        # self.dbconn = mysql.connector.connect(
+		# 	host ="database-1.csfcckck2rja.us-east-1.rds.amazonaws.com", 
+		# 	user = "admin",
+		# 	passwd = "DENe6Yhqny5SLxS7zc1h",
+		# 	database = "ITPE02",
+		# 	)
         
         dbcursor = self.dbconn.cursor()
         
-        sql_query = """SELECT * FROM mstimages WHERE mstimages.code <> 11 ORDER BY mstimages.code """
+        sql_query = """SELECT * FROM mstimages ORDER BY mstimages.code """
         #sql_query = """SELECT * FROM Movies ORDER BY Movies.year """
         dbcursor.execute(sql_query)
         
@@ -73,10 +66,9 @@ class MainLayout(FloatLayout):
             for img_rec in records:
                 # convert blob from database to texture
                 data = io.BytesIO(img_rec[3])
-                #data = io.BytesIO(img_rec[1])
-                #data = io.BytesIO(base64.b64decode(img_rec[3]))
                 dbImage = ImageConvert(data, ext="webp",filename=f'{img_rec[1]}.webp').texture 
                 hexColor = "DCA454" if img_rec[4] == 5 else "9174A9"
+                
                 # create CustomCard
                 mdCard = CustomCard(id=str(img_rec[0]),
                                     title=img_rec[1].title(),
@@ -84,8 +76,7 @@ class MainLayout(FloatLayout):
                                     group=img_rec[2].title()
                                     )
                 mdCard.md_bg_color=hexColor
-                mdCard.assign_texture_from_database(dbImage)
-                #mdCard.assign_texture_from_database("D:\Dir\python\Codemy\KivyMD-Sandberg\hotreload\Dynamic Loading\_Images\Avengers_EndGame.png")
+                #mdCard.assign_texture_from_database(dbImage)
                 self.ids.scrn1_grid.add_widget(mdCard)
                 
                 

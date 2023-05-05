@@ -43,6 +43,10 @@ class MainLayout(FloatLayout):
         
 class DemoApp(MDApp):
     def build(self):
+        self.theme_cls.material_style = "M3"    
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette= "Blue"
+        self.theme_cls.accent_palette= "Teal"
         return MainLayout()
         
  

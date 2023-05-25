@@ -8,3 +8,11 @@ version
 0.1-ok
 0.2-failed
 0.3-ok using kivymd
+0.4-ok using kivymd
+0.6-ok-uses DemoApp as classname instead of screenManagerApp
+0.7-failed, uses screenManagerApp as classname instead of DemoApp
+0.8-ok, uses ScreenmanagerApp as classname and screenmanager.kv(seems that there is a problem in naming conv)
+mydemo-uses Screenmanager.kv(bottomnav) file on demo.py
+mydemov0.6-ok [uses master.zip kivymd and kivy==master, internet and storage enabled], works well,
+mydemov0.7-ok [uses master.zip kivymd and kivy==master, internet and storage enabled], works well, all bottom tabs included,working emailer
+mydynamicload_v0.1-ok [uses master.zip kivymd and kivy==master, internet and storage enabled], all works well, emailer working,snackbar working

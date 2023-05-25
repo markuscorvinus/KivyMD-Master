@@ -2,6 +2,11 @@
 # like MDApp, MDLabel Screen, MDTextField
 # and MDRectangleFlatButton
 import os, sys
+import ssl
+import smtplib
+import certifi
+from email.message import EmailMessage
+
 from kivymd.app import MDApp
 from kivymd.uix.label import MDLabel
 from kivymd.uix.screen import Screen
@@ -12,8 +17,13 @@ from kivy.resources import resource_add_path
  
 # creating Demo Class(base class)
 class MainLayout(FloatLayout):
-    # screen = Screen()
-         
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+       
+    
+    def load_cards(self):
+        print("customize here")
+    
     # # defining label with all the parameters
     # l = MDLabel(text="HI PEOPLE!", halign='center',
     #             theme_text_color="Custom",
@@ -40,7 +50,29 @@ class MainLayout(FloatLayout):
     # call when clicked on it
     def btnfunc(self, obj):
         print("button is pressed!!")
+    
+    def sendEmail(self):
+        email_sender = 'markus.corvinus0827@gmail.com'
+        email_password = 'yzjbepduvwhfyhal'
+        email_receiver = 'mbabiano@sdca.edu.ph'
         
+        subject = 'Test Email'
+        body    = """
+        This is a test email
+        """
+        
+        em = EmailMessage()
+        em['From'] = email_sender
+        em['To']   = email_receiver
+        em['Subject'] = subject
+        em.set_content(body)
+        
+        context = ssl.create_default_context(cafile=certifi.where())
+        
+        with smtplib.SMTP_SSL('smtp.gmail.com',465,context=context) as smtp:
+            smtp.login(email_sender,email_password)
+            smtp.sendmail(email_sender,email_receiver,em.as_string())
+            smtp.quit()
 class DemoApp(MDApp):
     def build(self):
         self.theme_cls.material_style = "M3"    

@@ -5,7 +5,7 @@
     id: root.id
     style: "elevated"
     size_hint: None,None
-    size: "280dp","350dp"
+    size: "230dp","350dp"
     padding: 4
     pos_hint: {'center_x': 0.5}
     radius: "4dp"  
@@ -84,7 +84,7 @@
                     GridLayout:
                         id: scrn1_grid
                         cols: 2
-                        padding: '15dp'
+                        padding: '5dp'
                         spacing: '10dp'
                         size_hint_y: None
                         height: self.minimum_height
@@ -316,9 +316,9 @@
                 #badge_icon: "numeric-10"
                 
                 MDRaisedButton:
-                    text: "Create simple snackbar"
+                    text: "Create Push notif"
                     font_size: "18sp"
-                    on_release: Snackbar(text="This is a snackbar!").open()
+                    on_release: root.push_notif_open()
                     pos_hint: {"center_x": .5, "center_y": .8}
                     #Snackbar(text="This is a snackbar!",snackbar_x="10dp",snackbar_y="10dp",size_hint_x=(Window.width - (dp(10) * 2)) / Window.width).open()
                 MDRaisedButton:
@@ -330,5 +330,5 @@
                 MDRaisedButton:
                     text: "Create Icon snackbar"
                     font_size: "18sp"
-                    on_release: root.insert_image()
+                    on_release: root.open_icon_snackbar()
                     pos_hint: {"center_x": .5, "center_y": .3}

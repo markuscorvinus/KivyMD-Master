@@ -1,8 +1,9 @@
 import os, sys
-
+from plyer import notification 
 
 import sqlite3
-import mysql.connector #FOR mysql connection
+
+#import mysql.connector #FOR mysql connection
 from datetime import datetime
 import base64
 import io
@@ -76,7 +77,7 @@ class MainLayout(FloatLayout):
                                     group=img_rec[2].title()
                                     )
                 mdCard.md_bg_color=hexColor
-                #mdCard.assign_texture_from_database(dbImage)
+                mdCard.assign_texture_from_database(dbImage)
                 self.ids.scrn1_grid.add_widget(mdCard)
                 
                 
@@ -117,24 +118,24 @@ class MainLayout(FloatLayout):
         
         
     def insert_image(self):
-        #self.dbconn = sqlite3.connect('kivysql.db',detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
-        self.dbconn = mysql.connector.connect(
-			host ="database-1.csfcckck2rja.us-east-1.rds.amazonaws.com", 
-			user = "admin",
-			passwd = "DENe6Yhqny5SLxS7zc1h",
-			database = "ITPE02",
-			)
+        self.dbconn = sqlite3.connect('kivysql.db',detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+        # self.dbconn = mysql.connector.connect(
+		# 	host ="database-1.csfcckck2rja.us-east-1.rds.amazonaws.com", 
+		# 	user = "admin",
+		# 	passwd = "DENe6Yhqny5SLxS7zc1h",
+		# 	database = "ITPE02",
+		# 	)
          
         dbcursor = self.dbconn.cursor()
         
-        # database_params = {
-		# 		'var_name'        : 'Avengers-EndGame',
-        #         'var_group_type'  : 'pyro',
-        #         'var_image_data'  : self.imageToBlob('D:\Dir\python\Codemy\KivyMD-Sandberg\hotreload\Dynamic Loading\_Images\Avengers_EndGame.png'),
-        #         'var_created_by'  : "mbabiano",'var_updated_by'  : "mbabiano",
-        #         'var_created_at'  : datetime.now(),'var_updated_at'  : datetime.now(),
-		# 	}
-        database_params = ('Avengers-InfinityWar','pyro',self.imageToB64('D:\Dir\python\Codemy\KivyMD-Sandberg\hotreload\Dynamic Loading\_Images\\avengers-infinity.jpeg'),"mbabiano","mbabiano",datetime.now(),datetime.now())
+        database_params = {
+				'var_name'        : 'Avengers-EndGame',
+                'var_group_type'  : 'pyro',
+                'var_image_data'  : self.imageToBlob('D:\Dir\python\Codemy\KivyMD-Sandberg\hotreload\Dynamic Loading\_Images\Avengers_EndGame.png'),
+                'var_created_by'  : "mbabiano",'var_updated_by'  : "mbabiano",
+                'var_created_at'  : datetime.now(),'var_updated_at'  : datetime.now(),
+			}
+        #database_params = ('Avengers-InfinityWar','pyro',self.imageToB64('D:\Dir\python\Codemy\KivyMD-Sandberg\hotreload\Dynamic Loading\_Images\\avengers-infinity.jpeg'),"mbabiano","mbabiano",datetime.now(),datetime.now())
         #query_string = "INSERT INTO mstimages (name,group_type,image_data,created_by,updated_by,created_at,updated_at) VALUES (:var_name,:var_group_type,:var_image_data,:var_created_by,:var_updated_by,:var_created_at,:var_updated_at)"
         query_string = "INSERT INTO mstimages (name,group_type,image_data,created_by,updated_by,created_at,updated_at) VALUES (%s,%s,%s,%s,%s,%s,%s)"
         dbcursor.execute(query_string,database_params)
@@ -165,6 +166,12 @@ class MainLayout(FloatLayout):
     def blobToImage(self,blobdata):
         with open(blobdata, 'wb') as file:
             file.write(data)
+    
+    
+    
+    def push_notif_open(self):
+        print("me")
+        notification.notify(title ='This is Push Notif',message ='You message here')
         
 class CustomCard(MDCard):
     id      = StringProperty(None)

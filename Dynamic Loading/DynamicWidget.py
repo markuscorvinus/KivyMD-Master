@@ -46,12 +46,7 @@ class MainLayout(FloatLayout):
         
     def load_cards(self):
         self.dbconn = sqlite3.connect('kivysql.db',detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
-        # self.dbconn = mysql.connector.connect(
-		# 	host ="database-1.csfcckck2rja.us-east-1.rds.amazonaws.com", 
-		# 	user = "admin",
-		# 	passwd = "DENe6Yhqny5SLxS7zc1h",
-		# 	database = "ITPE02",
-		# 	)
+       
         
         dbcursor = self.dbconn.cursor()
         
@@ -119,24 +114,17 @@ class MainLayout(FloatLayout):
         
     def insert_image(self):
         self.dbconn = sqlite3.connect('kivysql.db',detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
-        # self.dbconn = mysql.connector.connect(
-		# 	host ="database-1.csfcckck2rja.us-east-1.rds.amazonaws.com", 
-		# 	user = "admin",
-		# 	passwd = "DENe6Yhqny5SLxS7zc1h",
-		# 	database = "ITPE02",
-		# 	)
+       
          
         dbcursor = self.dbconn.cursor()
         
         database_params = {
 				'var_name'        : 'Avengers-EndGame',
                 'var_group_type'  : 'pyro',
-                'var_image_data'  : self.imageToBlob('D:\Dir\python\Codemy\KivyMD-Sandberg\hotreload\Dynamic Loading\_Images\Avengers_EndGame.png'),
+                'var_image_data'  : self.imageToBlob('_Images\Avengers_EndGame.png'),
                 'var_created_by'  : "mbabiano",'var_updated_by'  : "mbabiano",
                 'var_created_at'  : datetime.now(),'var_updated_at'  : datetime.now(),
 			}
-        #database_params = ('Avengers-InfinityWar','pyro',self.imageToB64('D:\Dir\python\Codemy\KivyMD-Sandberg\hotreload\Dynamic Loading\_Images\\avengers-infinity.jpeg'),"mbabiano","mbabiano",datetime.now(),datetime.now())
-        #query_string = "INSERT INTO mstimages (name,group_type,image_data,created_by,updated_by,created_at,updated_at) VALUES (:var_name,:var_group_type,:var_image_data,:var_created_by,:var_updated_by,:var_created_at,:var_updated_at)"
         query_string = "INSERT INTO mstimages (name,group_type,image_data,created_by,updated_by,created_at,updated_at) VALUES (%s,%s,%s,%s,%s,%s,%s)"
         dbcursor.execute(query_string,database_params)
         
